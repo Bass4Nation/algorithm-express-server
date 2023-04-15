@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import admin from '../firebase';
 
 const app = express();
 const port = 3000;
@@ -63,7 +64,7 @@ app.get('/bubble_sort', (req: Request, res: Response) => {
   //   }
   // }
 
-  
+
   // try {
   //   let index = 0;
   //   let currentNumber = numbersDelivered[index];
@@ -94,6 +95,17 @@ app.get('/bubble_sort', (req: Request, res: Response) => {
   res.status(200).send('Bubble sort not implemented yet');
 });
 
+app.get('/users/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const userRecord = await admin.auth().getUser(userId);
+    console.log('Successfully fetched user data: ', userRecord.toJSON());
+    
+    res.status(200).send(userRecord);
+  } catch (error) {
+    res.status(500).send({ error: 'Error fetching user data' });
+  }
+});
 
 
 // Used to convert numbers to string for the response to the user

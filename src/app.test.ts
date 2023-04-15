@@ -47,14 +47,15 @@ describe('GET /bubble_sort', () => {
 });
 
 //  -----------------  Firebase  -----------------
-// describe('GET /firebase', () => {
-//   it('should return firebase data', async () => {
-//     const command = '/firebase';
+describe('GET /firebase', () => {
+  it('should return firebase data /users/:userId', async () => {
+    const command = '/users/';
+    const user_id: string = 'vo6EJgfHXqcOYRgkyhjFWRYev663';
 
-//     const response = await request(app).get(command);
-//     expect(response.statusCode).toBe(200);
-//   });
-// });
+    const response = await request(app).get(command+user_id);
+    expect(response.statusCode).toBe(200);
+  });
+});
 
 
 
