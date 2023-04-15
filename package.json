@@ -4,8 +4,10 @@
   "description": "Going to test if I can run express in background to calculate stuff and sort stuff for webpages",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
-  },
+    "start": "node dist/app.js",
+    "test": "jest",
+    "build": "tsc"
+    },
   "keywords": [],
   "author": "",
   "license": "ISC",
