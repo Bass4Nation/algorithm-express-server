@@ -4,7 +4,7 @@ const app = express();
 const port = 3000;
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('Hello World!');
+  res.send('Hello World! From Express Server in Typescript with Jest Testing Framework and Supertest for testing HTTP requests and responses in Express Server in Typescript! ');
 });
 
 app.get('/sort', (req: Request, res: Response) => {
