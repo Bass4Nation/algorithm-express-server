@@ -19,6 +19,8 @@ app.get('/sort', (req: Request, res: Response) => {
 
     const sortedNumbers = sortNumbersHighToLow(numbers);
     const sortedNumbersString = convertNumbersToString(sortedNumbers);
+    console.log(sortedNumbersString);
+    
 
 
     
