@@ -151,6 +151,8 @@ const addPost: RequestHandler = async (req, res) => {
 
     res.status(201).send({ id: postRef.id, ...newPost });
   } catch (error) {
+    console.error(error);
+    
     res.status(500).send({ error: 'Error adding new post' });
   }
 };
