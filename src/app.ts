@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import admin from '../firebase';
+import { firestore } from '../firebase';
 
 const app = express();
 const port = 3000;
@@ -104,6 +105,25 @@ app.get('/users/:userId', async (req, res) => {
     res.status(200).send(userRecord);
   } catch (error) {
     res.status(500).send({ error: 'Error fetching user data' });
+  }
+});
+
+// -----------------  Firestore  -----------------
+app.get('/posts', async (req, res) => {
+  try {
+    const postsSnapshot = await firestore.collection('posts').get();
+    const posts: any[] = [];
+
+    postsSnapshot.forEach((doc) => {
+      posts.push({
+        id: doc.id,
+        ...doc.data(),
+      });
+    });
+
+    res.status(200).send(posts);
+  } catch (error) {
+    res.status(500).send({ error: 'Error fetching posts data' });
   }
 });
 
