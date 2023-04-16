@@ -6,6 +6,8 @@ import { firestore } from '../firebase';
 const app = express();
 const port = 3000;
 
+app.use(express.json()); // Parse JSON bodies (as sent by API clients)
+
 app.get('/', (req: Request, res: Response) => {
   // console.log('You sent a GET request to the / endpoint');
   res.send('Hello World! From Express Server in Typescript with Jest Testing Framework and Supertest for testing HTTP requests and responses in Express Server in Typescript!');
