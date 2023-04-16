@@ -133,33 +133,29 @@ app.get('/posts', async (req, res) => {
 });
 // ------------------ POST REQUESTS ------------------
 // Route to add a new post
-const addPost: RequestHandler = async (req, res) => {
+// Route to add a new document to a specified collection
+const addToCollection: RequestHandler = async (req, res) => {
   try {
-    const { title, content, author } = req.body;
+    const collection = req.params.collection;
+    const documentData = req.body;
 
-    if (!title || !content || !author) {
-      res.status(400).send({ error: 'All fields (title, content, author) are required.' });
+    if (Object.keys(documentData).length === 0) {
+      res.status(400).send({ error: 'Request body cannot be empty.' });
       return;
     }
 
-    const newPost = {
-      title,
-      content,
-      author,
+    const documentRef = await firestore.collection(collection).add({
+      ...documentData,
       createdAt: admin.firestore.Timestamp.fromDate(new Date()),
-    };
+    });
 
-    const postRef = await firestore.collection('posts').add(newPost);
-
-    res.status(201).send({ id: postRef.id, ...newPost });
+    res.status(201).send({ id: documentRef.id, ...documentData });
   } catch (error) {
-    console.error(error);
-    
-    res.status(500).send({ error: 'Error adding new post' });
+    res.status(500).send({ error: 'Error adding document to the collection' });
   }
 };
 
-app.post('/posts', addPost);
+app.post('/:collection', addToCollection);
 
 
 // Used to convert numbers to string for the response to the user
