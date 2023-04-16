@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import { RequestHandler } from 'express';
 import admin from '../firebase';
 import { firestore } from '../firebase';
 
@@ -128,6 +129,33 @@ app.get('/posts', async (req, res) => {
     res.status(500).send({ error: 'Error fetching posts data' });
   }
 });
+// ------------------ POST REQUESTS ------------------
+// Route to add a new post
+const addPost: RequestHandler = async (req, res) => {
+  try {
+    const { title, content, author } = req.body;
+
+    if (!title || !content || !author) {
+      res.status(400).send({ error: 'All fields (title, content, author) are required.' });
+      return;
+    }
+
+    const newPost = {
+      title,
+      content,
+      author,
+      createdAt: admin.firestore.Timestamp.fromDate(new Date()),
+    };
+
+    const postRef = await firestore.collection('posts').add(newPost);
+
+    res.status(201).send({ id: postRef.id, ...newPost });
+  } catch (error) {
+    res.status(500).send({ error: 'Error adding new post' });
+  }
+};
+
+app.post('/posts', addPost);
 
 
 // Used to convert numbers to string for the response to the user
