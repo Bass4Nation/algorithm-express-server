@@ -109,9 +109,11 @@ app.get('/users/:userId', async (req, res) => {
 });
 
 // -----------------  Firestore  -----------------
+// Get all posts - BUT this is not working yet. It is just getting posts as a document with 
 app.get('/posts', async (req, res) => {
+  const collection: any = req.query.col || 'posts';
   try {
-    const postsSnapshot = await firestore.collection('posts').get();
+    const postsSnapshot = await firestore.collection(collection).get();
     const posts: any[] = [];
 
     postsSnapshot.forEach((doc) => {
