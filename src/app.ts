@@ -3,10 +3,14 @@ import { RequestHandler } from 'express';
 import admin from '../firebase';
 import { firestore } from '../firebase';
 
+const cors = require('cors');
 const app = express();
 const port = 3000;
 
 app.use(express.json()); // Parse JSON bodies (as sent by API clients)
+
+// Enable CORS for all routes
+app.use(cors());
 
 app.get('/', (req: Request, res: Response) => {
   // console.log('You sent a GET request to the / endpoint');
